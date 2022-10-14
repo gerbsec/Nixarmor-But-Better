@@ -1,11 +1,5 @@
 #!/bin/bash
-#
-# Perform hardening operations for Fedora distributions
-#####################
-# Author : Emir Ozer
-# Creation Date: 13 Jan 2015
-#####################
-echo -n "I do not claim any responsibility for your use of this script."
+
 
 sys_upgrades() {
     yum -y update
@@ -30,25 +24,16 @@ disable_root() {
 
 user_pass_expirations() {
     # Passwords will expire every 180 days
-    perl -npe 's/PASS_MAX_DAYS\s+99999/PASS_MAX_DAYS 180/' -i /etc/login.defs
+    perl -npe 's/PASS_MAX_DAYS\s+99999/PASS_MAX_DAYS 90/' -i /etc/login.defs
     # Passwords may only be changed once a day
     perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
 }
 
-harden_ssh(){
-    sudo sh -c 'echo "PermitRootLogin no" >> /etc/ssh/sshd_config'
-}
-
 set_chkrootkit() {
     # check the github page for cronning this task
-    yum -y install chkrootkit
+    yum -y install chkrootkit clamav
     chkrootkit
-}
-
-logwatch_reporter() {
-    yum -y install logwatch
-    # make it run weekly
-    mv /etc/cron.daily/0logwatch /etc/cron.weekly/    
+    clamav --infected --recursive /
 }
 
 remove_atd() {
@@ -126,7 +111,6 @@ main() {
     unattended_upg
     disable_root
     user_pass_expirations
-    harden_ssh
     set_chkrootkit
     logwatch_reporter
     remove_atd

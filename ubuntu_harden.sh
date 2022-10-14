@@ -1,11 +1,4 @@
 #!/bin/bash
-#
-# Perform hardening operations for Ubuntu distributions
-#####################
-# Author : Emir Ozer
-# Creation Date: 8 Jan 2015
-#####################
-echo -n "I do not claim any responsibility for your use of this script."
 
 sys_upgrades() {
     apt-get --yes --force-yes update
@@ -54,9 +47,11 @@ purge_whoopsie() {
     apt-get --yes purge whoopsie
 }
 
-set_chkrootkit() {
-    apt-get --yes install chkrootkit
+set_av() {
+    apt-get --yes install chkrootkit clamav
     chkrootkit
+    freshclam
+    clamav --infected --recursive /
     }
 
 disable_compilers() {
@@ -73,31 +68,19 @@ disable_compilers() {
     # unless you are working with a specific one
 }
 
-firewall() {
-    ufw allow ssh
-    ufw allow http
-    ufw deny 23
-    ufw default deny
-    ufw enable
-    }
+# firewall() {
+#     ufw allow ssh
+#     ufw allow http
+#     ufw deny 23
+#     ufw default deny
+#     ufw enable
+#     }
 
-harden_ssh_brute() {
-    # Many attackers will try to use your SSH server to brute-force passwords.
-    # This will only allow 6 connections every 30 seconds from the same IP address.
-    ufw limit OpenSSH
-}
-
-harden_ssh(){
-    sudo sh -c 'echo "PermitRootLogin no" >> /etc/ssh/ssh_config'
-}
-
-logwatch_reporter() {
-    apt-get --yes --force-yes install logwatch
-    # make it run weekly
-    cd /
-    mv /etc/cron.daily/00logwatch /etc/cron.weekly/
-    cd
-}
+# harden_ssh_brute() {
+#     # Many attackers will try to use your SSH server to brute-force passwords.
+#     # This will only allow 6 connections every 30 seconds from the same IP address.
+#     ufw limit OpenSSH
+# }
 
 purge_atd() {
     apt-get --yes purge at
@@ -162,12 +145,8 @@ main() {
     purge_telnet
     purge_nfs
     purge_whoopsie
-    set_chkrootkit
+    set_av
     disable_compilers
-    firewall
-    harden_ssh_brute
-    harden_ssh
-    logwatch_reporter
     process_accounting
     purge_atd
     disable_avahi

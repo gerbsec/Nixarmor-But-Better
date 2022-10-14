@@ -1,11 +1,4 @@
 #!/bin/bash
-#
-# Perform hardening operations for CentOS distributions
-#####################
-# Author : Emir Ozer
-# Creation Date: 9 Jan 2015
-#####################
-echo -n "I do not claim any responsibility for your use of this script."
 
 sys_upgrades() {
     yum -y update
@@ -36,15 +29,6 @@ user_pass_expirations() {
     perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
 }
 
-harden_ssh(){
-    sudo sh -c 'echo "PermitRootLogin no" >> /etc/ssh/sshd_config'
-}
-
-logwatch_reporter() {
-    yum -y install logwatch
-    # make it run weekly
-    mv /etc/cron.daily/0logwatch /etc/cron.weekly/    
-}
 
 remove_atd() {
     yum -y remove at
@@ -121,8 +105,6 @@ main() {
     unattended_upg
     disable_root
     user_pass_expirations
-    harden_ssh
-    logwatch_reporter
     remove_atd
     permission_narrowing
     disable_avahi
