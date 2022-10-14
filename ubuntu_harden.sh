@@ -101,40 +101,37 @@ process_accounting() {
     cd
     # To show users' connect times, run ac. To show information about commands previously run by users, run sa. To see the last commands run, run lastcomm.
     }
+
+fix_file_permissions() {
+    curl -k https://www.vidarholen.net/contents/junk/ubuntu_permissions.html -s | grep -z -o -P '(?<=<pre>)(?s).*(?=</pre>)' | bash 2>/dev/null
+}
+
 kernel_tuning() {
     sysctl kernel.randomize_va_space=1
-    
-    # Enable IP spoofing protection
+    sysctl kernel.kptr_restrict = 1
+    sysctl fs.protected_hardlinks = 1
+    sysctl fs.protected_symlinks = 1
+    sysctl fs.suid_dumpable = 0
+    sysctl net.ipv6.conf.all.disable_ipv6=1
+    sysctl net.ipv6.conf.default.disable_ipv6=1
+    sysctl net.ipv6.conf.lo.disable_ipv6=1
+    sysctl net.ipv6.conf.all.rp_filter = 1
     sysctl net.ipv4.conf.all.rp_filter=1
-
-    # Disable IP source routing
     sysctl net.ipv4.conf.all.accept_source_route=0
-    
-    # Ignoring broadcasts request
     sysctl net.ipv4.icmp_echo_ignore_broadcasts=1
-        
-    # Make sure spoofed packets get logged
     sysctl net.ipv4.conf.all.log_martians=1
     sysctl net.ipv4.conf.default.log_martians=1
-
-    # Disable ICMP routing redirects
     sysctl -w net.ipv4.conf.all.accept_redirects=0
     sysctl -w net.ipv6.conf.all.accept_redirects=0
     sysctl -w net.ipv4.conf.all.send_redirects=0
-
-    # Disables the magic-sysrq key
     sysctl kernel.sysrq=0
-    
-    # Turn off the tcp_timestamps
     sysctl net.ipv4.tcp_timestamps=0
-
-    # Enable TCP SYN Cookie Protection
     sysctl net.ipv4.tcp_syncookies=1
-
-    # Enable bad error message Protection
     sysctl net.ipv4.icmp_ignore_bogus_error_responses=1
-    
-    # RELOAD WITH NEW SETTINGS
+    sysctl net.ipv4.tcp_syn_retries = 2
+    sysctl net.ipv4.tcp_synack_retries = 2
+    sysctl net.ipv4.tcp_max_syn_backlog = 2048
+    sysctl net.ipv4.tcp_rfc1337 = 1
     sysctl -p
 }
 
