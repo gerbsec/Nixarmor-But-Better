@@ -39,6 +39,13 @@ harden_php(){
 done
 }
 
+harden_apache(){
+    for i in $(find / -name security.conf 2>/dev/null); do 
+        perl -npe 's/ServerTokens\s+OS/ServerTokens Prod/' -i $i;
+        perl -npe 's/ServerSignature\s+On/ServerSignature Off/' -i $i;
+done
+}
+
 remove_atd() {
     yum -y remove at
 }
@@ -113,6 +120,7 @@ main() {
     user_pass_expirations
     remove_atd
     harden_php
+    harden_apache
     set_av
     disable_avahi
     disable_postfix
