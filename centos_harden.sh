@@ -7,10 +7,6 @@ sys_upgrades() {
 }
 
 unattended_upg() {
-    # IMPORTANT - Unattended upgrades may cause issues
-    # But it is known that the benefits are far more than
-    # downsides
-    # In CentOS unattended_upgrades are done by yum-cron
     yum -y install yum-cron
     chkconfig --level 345 yum-cron on
     service yum-cron start
@@ -18,21 +14,17 @@ unattended_upg() {
 
 disable_root() {
     passwd -l root
-    # for any reason if you need to re-enable it:
-    # sudo passwd -l root
 }
 
 user_pass_expirations() {
-    # Passwords will expire every 180 days
     perl -npe 's/PASS_MAX_DAYS\s+99999/PASS_MAX_DAYS 180/' -i /etc/login.defs
-    # Passwords may only be changed once a day
     perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
+    perl -npe 's/PASS_WARN_AGE\s+7/PASS_WARN_AGE 14/g' -i /etc/login.defs
 }
 
 
 remove_atd() {
     yum -y remove at
-    # less layers equals more security
 }
 
 disable_ipv6() {
@@ -45,7 +37,7 @@ permission_narrowing() {
     chmod 700 /var/log/audit
     chmod 740 /etc/rc.d/init.d/iptables
     chmod 740 /sbin/iptables
-    chmod –R 700 /etc/skel
+    chmod -R 700 /etc/skel
     chmod 600 /etc/rsyslog.conf
     chmod 640 /etc/security/access.conf
     chmod 600 /etc/sysctl.conf
@@ -101,11 +93,11 @@ main() {
     disable_root
     user_pass_expirations
     remove_atd
-    permission_narrowing
     disable_avahi
     disable_postfix
     kernel_tuning
     fix_file_permissions
+    permission_narrowing
 }
 
 main "$@"

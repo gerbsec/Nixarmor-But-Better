@@ -8,30 +8,22 @@ sys_upgrades() {
 }
 
 unattended_upg() {
-    # IMPORTANT - Unattended upgrades may cause issues
-    # But it is known that the benefits are far more than
-    # downsides
     apt-get --yes --force-yes install unattended-upgrades
     dpkg-reconfigure -plow unattended-upgrades
-    # This will create the file /etc/apt/apt.conf.d/20auto-upgrades
-    # with the following contents:
-    #############
-    # APT::Periodic::Update-Package-Lists "1";
-    # APT::Periodic::Unattended-Upgrade "1";
-    #############
+}
+
+user_pass_expirations() {
+    perl -npe 's/PASS_MAX_DAYS\s+99999/PASS_MAX_DAYS 180/' -i /etc/login.defs
+    perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
+    perl -npe 's/PASS_WARN_AGE\s+7/PASS_WARN_AGE 14/g' -i /etc/login.defs
 }
 
 disable_root() {
     passwd -l root
-    # for any reason if you need to re-enable it:
     # sudo passwd -l root
 }
 
 purge_nfs() {
-    # This the standard network file sharing for Unix/Linux/BSD
-    # style operating systems.
-    # Unless you require to share data in this manner,
-    # less layers = more sec
     apt-get --yes purge nfs-kernel-server nfs-common portmap rpcbind autofs
 }
 
@@ -39,8 +31,6 @@ disable_compilers() {
     chmod 000 /usr/bin/cc
     chmod 000 /usr/bin/gcc
     # 755 to bring them back online
-    # It is better to restrict access to them
-    # unless you are working with a specific one
 }
 
 # firewall() {
@@ -124,7 +114,6 @@ main() {
     unattended_upg
     disable_root
     purge_nfs
-    disable_compilers
     set_av
     process_accounting
     purge_at
@@ -132,6 +121,7 @@ main() {
     disable_exim_pckgs
     kernel_tuning
     fix_file_permissions
+    disable_compilers
 }
 
 main "$@"

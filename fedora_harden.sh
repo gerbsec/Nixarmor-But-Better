@@ -8,9 +8,6 @@ sys_upgrades() {
 }
 
 unattended_upg() {
-    # IMPORTANT - Unattended upgrades may cause issues
-    # But it is known that the benefits are far more than
-    # downsides
     yum -y install yum-cron
     chkconfig --level 345 yum-cron on
     service yum-cron start
@@ -18,23 +15,20 @@ unattended_upg() {
 
 disable_root() {
     passwd -l root
-    # for any reason if you need to re-enable it:
     # sudo passwd -l root
 }
 
-user_pass_expirations() {
-    # Passwords will expire every 180 days
-    perl -npe 's/PASS_MAX_DAYS\s+99999/PASS_MAX_DAYS 90/' -i /etc/login.defs
-    # Passwords may only be changed once a day
-    perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
-}
-
 set_av() {
-    # check the github page for cronning this task
     yum -y install chkrootkit clamav
     chkrootkit
     freshclam
     clamscan --infected --recursive /
+}
+
+user_pass_expirations() {
+    perl -npe 's/PASS_MAX_DAYS\s+99999/PASS_MAX_DAYS 180/' -i /etc/login.defs
+    perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
+    perl -npe 's/PASS_WARN_AGE\s+7/PASS_WARN_AGE 14/g' -i /etc/login.defs
 }
 
 remove_atd() {
@@ -106,15 +100,14 @@ main() {
     sys_upgrades
     unattended_upg
     disable_root
-    user_pass_expirations
     set_av
-    logwatch_reporter
     remove_atd
-    permission_narrowing
     disable_avahi
     disable_postfix
     kernel_tuning
     fix_file_permissions
+    user_pass_expirations
+    permission_narrowing
 }
 
 main "$@"

@@ -8,42 +8,30 @@ sys_upgrades() {
 }
 
 unattended_upg() {
-    # IMPORTANT - Unattended upgrades may cause issues
-    # But it is known that the benefits are far more than
-    # downsides
     apt-get --yes --force-yes install unattended-upgrades
     dpkg-reconfigure -plow unattended-upgrades
-    # This will create the file /etc/apt/apt.conf.d/20auto-upgrades
-    # with the following contents:
-    #############
-    # APT::Periodic::Update-Package-Lists "1";
-    # APT::Periodic::Unattended-Upgrade "1";
-    #############
+}
+
+
+user_pass_expirations() {
+    perl -npe 's/PASS_MAX_DAYS\s+99999/PASS_MAX_DAYS 180/' -i /etc/login.defs
+    perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
+    perl -npe 's/PASS_WARN_AGE\s+7/PASS_WARN_AGE 14/g' -i /etc/login.defs
 }
 
 disable_root() {
     passwd -l root
-    # for any reason if you need to re-enable it:
-    # sudo passwd -l root
 }
 
 purge_telnet() {
-    # Unless you need to specifically work with telnet, purge it
-    # less layers = more sec
     apt-get --yes purge telnet
 }
 
 purge_nfs() {
-    # This the standard network file sharing for Unix/Linux/BSD
-    # style operating systems.
-    # Unless you require to share data in this manner,
-    # less layers = more sec
     apt-get --yes purge nfs-kernel-server nfs-common portmap rpcbind autofs
 }
 
 purge_whoopsie() {
-    # Although whoopsie is useful(a crash log sender to ubuntu)
-    # less layers = more sec
     apt-get --yes purge whoopsie
 }
 
@@ -64,8 +52,6 @@ disable_compilers() {
     chmod 000 /usr/bin/*c++
     chmod 000 /usr/bin/*g++
     # 755 to bring them back online
-    # It is better to restrict access to them
-    # unless you are working with a specific one
 }
 
 # firewall() {
@@ -84,22 +70,17 @@ disable_compilers() {
 
 purge_atd() {
     apt-get --yes purge at
-    # less layers equals more security
 }
 
 disable_avahi() {
-    # The Avahi daemon provides mDNS/DNS-SD discovery support
-    # (Bonjour/Zeroconf) allowing applications to discover services on the network.
     update-rc.d avahi-daemon disable
 }
 
 process_accounting() {
-    # Linux process accounting keeps track of all sorts of details about which commands have been run on the server, who ran them, when, etc.
     apt-get --yes --force-yes install acct
     cd /
     touch /var/log/wtmp
     cd
-    # To show users' connect times, run ac. To show information about commands previously run by users, run sa. To see the last commands run, run lastcomm.
     }
 
 fix_file_permissions() {
@@ -143,12 +124,12 @@ main() {
     purge_nfs
     purge_whoopsie
     set_av
-    disable_compilers
     process_accounting
     purge_atd
     disable_avahi
     kernel_tuning
     fix_file_permissions
+    disable_compilers
 }
 
 main "$@"
