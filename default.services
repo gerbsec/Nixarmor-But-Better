@@ -1,0 +1,28 @@
+  accounts-daemon.service                    loaded    active   running Accounts Service
+  acpid.service                              loaded    active   running ACPI event daemon
+  anacron.service                            loaded    active   running Run anacron jobs
+  avahi-daemon.service                       loaded    active   running Avahi mDNS/DNS-SD Stack
+  ccsclient.service                          loaded    active   running LSB: CCS Client
+  colord.service                             loaded    active   running Manage, Install and Generate Color Profiles
+  cron.service                               loaded    active   running Regular background program processing daemon
+  cups-browsed.service                       loaded    active   running Make remote CUPS printers available locally
+  cups.service                               loaded    active   running CUPS Scheduler
+  dbus.service                               loaded    active   running D-Bus System Message Bus
+  getty@tty1.service                         loaded    active   running Getty on tty1
+  irqbalance.service                         loaded    active   running LSB: daemon to balance interrupts for SMP systems
+  lightdm.service                            loaded    active   running Light Display Manager
+  ModemManager.service                       loaded    active   running Modem Manager
+  NetworkManager.service                     loaded    active   running Network Manager
+  polkitd.service                            loaded    active   running Authenticate and Authorize Users to Run Privileged Tasks
+  rsyslog.service                            loaded    active   running System Logging Service
+  rtkit-daemon.service                       loaded    active   running RealtimeKit Scheduling Policy Service
+  ssh.service                                loaded    active   running OpenBSD Secure Shell server
+  systemd-journald.service                   loaded    active   running Journal Service
+  systemd-logind.service                     loaded    active   running Login Service
+  systemd-timesyncd.service                  loaded    active   running Network Time Synchronization
+  systemd-udevd.service                      loaded    active   running udev Kernel Device Manager
+  udisks2.service                            loaded    active   running Disk Manager
+  upower.service                             loaded    active   running Daemon for power management
+  user@1001.service                          loaded    active   running User Manager for UID 1001
+  vmware-tools-thinprint.service             loaded    active   running LSB: VMware Tools thinprint
+  vmware-tools.service                       loaded    active   running LSB: VMware Tools service
