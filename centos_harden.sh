@@ -22,6 +22,22 @@ user_pass_expirations() {
     perl -npe 's/PASS_WARN_AGE\s+7/PASS_WARN_AGE 14/g' -i /etc/login.defs
 }
 
+harden_php(){
+    for i in $(find / -name php.ini 2>/dev/null); do 
+	    perl -npe 's/display_errors\s+=\s+On/display_errors = Off/' -i $i;
+	    perl -npe 's/log_errors\s+=\s+Off/log_errors = On/' -i $i;
+	    perl -npe 's/file_uploads\s+=\s+On/file_uploads = Off/' -i $i;
+	    perl -npe 's/allow_url_fopen\s+=\s+On/allow_url_fopen = Off/' -i $i;
+	    perl -npe 's/allow_url_include\s+=\s+On/allow_url_include = Off/' -i $i;
+	    perl -npe 's/sql.safe_mode\s+=\s+Off/sql.safe_mode = On/' -i $i;
+	    perl -npe 's/magic_quotes_gpc\s+=\s+On/magic_quotes_gpc = Off/' -i $i;
+	    perl -npe 's/max_execution_time\s+=\s+30/max_execution_time = 30/' -i $i;
+	    perl -npe 's/max_input_time\s+=\s+60/max_input_time = 30/' -i $i;
+	    perl -npe 's/memory_limit\s+=\s+-1/memory_limit = 40M/' -i $i;
+	    perl -npe 's/magic_quotes_gpc\s+=\s+On/magic_quotes_gpc = Off/' -i $i;
+	    perl -npe 's/disable_functions\s+=\s+/disable_functions = exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source/' -i $i;
+done
+}
 
 remove_atd() {
     yum -y remove at
@@ -96,6 +112,7 @@ main() {
     disable_root
     user_pass_expirations
     remove_atd
+    harden_php
     set_av
     disable_avahi
     disable_postfix
