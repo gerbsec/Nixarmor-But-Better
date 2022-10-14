@@ -148,6 +148,7 @@ main() {
     purge_atd
     disable_avahi
     kernel_tuning
+    fix_file_permissions
 }
 
 main "$@"
