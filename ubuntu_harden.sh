@@ -108,10 +108,10 @@ fix_file_permissions() {
 
 kernel_tuning() {
     sysctl kernel.randomize_va_space=1
-    sysctl kernel.kptr_restrict = 1
-    sysctl fs.protected_hardlinks = 1
-    sysctl fs.protected_symlinks = 1
-    sysctl fs.suid_dumpable = 0
+    sysctl -w kernel.kptr_restrict = 1
+    sysctl -w fs.protected_hardlinks = 1
+    sysctl -w fs.protected_symlinks = 1
+    sysctl -w fs.suid_dumpable = 0
     sysctl net.ipv6.conf.all.disable_ipv6=1
     sysctl net.ipv6.conf.default.disable_ipv6=1
     sysctl net.ipv6.conf.lo.disable_ipv6=1
