@@ -36,11 +36,6 @@ remove_atd() {
     # less layers equals more security
 }
 
-disable_ipv6() {
-    sysctl -w net.ipv6.conf.default.disable_ipv6=1
-    sysctl -w net.ipv6.conf.all.disable_ipv6=1
-}
-
 permission_narrowing() {
     chmod 700 /root
     chmod 700 /var/log/audit

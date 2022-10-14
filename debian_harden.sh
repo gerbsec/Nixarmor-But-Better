@@ -122,6 +122,7 @@ main() {
     kernel_tuning
     fix_file_permissions
     disable_compilers
+    user_pass_expirations
 }
 
 main "$@"
