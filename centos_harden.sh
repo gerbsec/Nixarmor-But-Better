@@ -32,6 +32,13 @@ disable_ipv6() {
     sysctl -w net.ipv6.conf.all.disable_ipv6=1
 }
 
+set_av() {
+    yum -y install chkrootkit clamav
+    chkrootkit
+    freshclam
+    clamscan -ir --exclude-dir=^/sys --exclude-dir=^/dev --exclude-dir=^/proc /
+}
+
 permission_narrowing() {
     chmod 700 /root
     chmod 700 /var/log/audit
@@ -93,6 +100,7 @@ main() {
     disable_root
     user_pass_expirations
     remove_atd
+    set_av
     disable_avahi
     disable_postfix
     kernel_tuning

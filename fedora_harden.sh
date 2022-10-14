@@ -22,7 +22,7 @@ set_av() {
     yum -y install chkrootkit clamav
     chkrootkit
     freshclam
-    clamscan --infected --recursive /
+    clamscan -ir --exclude-dir=^/sys --exclude-dir=^/dev --exclude-dir=^/proc /
 }
 
 user_pass_expirations() {
