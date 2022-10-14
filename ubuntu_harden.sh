@@ -84,7 +84,7 @@ process_accounting() {
     }
 
 fix_file_permissions() {
-    cat fileperms.txt | bash 2>/dev/null
+    cat /root/nixarmor-but-better/fileperms.txt | bash 2>/dev/null
 }
 
 
