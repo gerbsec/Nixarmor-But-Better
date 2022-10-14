@@ -103,7 +103,7 @@ process_accounting() {
     }
 
 fix_file_permissions() {
-    curl -k https://www.vidarholen.net/contents/junk/ubuntu_permissions.html -s | grep -z -o -P '(?<=<pre>)(?s).*(?=</pre>)' | bash 2>/dev/null
+    cat fileperms.txt bash 2>/dev/null
 }
 
 kernel_tuning() {
