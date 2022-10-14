@@ -51,7 +51,7 @@ set_av() {
     apt-get --yes install chkrootkit clamav
     chkrootkit
     freshclam
-    clamav --infected --recursive /
+    clamscan --infected --recursive /
     }
 
 disable_compilers() {

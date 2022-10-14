@@ -92,40 +92,32 @@ process_accounting() {
 }
 
 kernel_tuning() {
-    sudo sh -c 'echo "kernel.randomize_va_space=1" >> /etc/sysctl.conf'
-    
-    # Enable IP spoofing protection
-    sudo sh -c 'echo "net.ipv4.conf.all.rp_filter=1" >> /etc/sysctl.conf'
-
-    # Disable IP source routing
-    sudo sh -c 'echo "net.ipv4.conf.all.accept_source_route=0" >> /etc/sysctl.conf'
-    
-    # Ignoring broadcasts request
-    sudo sh -c 'echo "net.ipv4.icmp_echo_ignore_broadcasts=1" >> /etc/sysctl.conf'
-            
-    # Make sure spoofed packets get logged
-    sudo sh -c 'echo "net.ipv4.conf.all.log_martians=1" >> /etc/sysctl.conf'
-    sudo sh -c 'echo "net.ipv4.conf.default.log_martians=1" >> /etc/sysctl.conf'
-    
-    # Disable ICMP routing redirects
-    sudo sh -c 'echo "net.ipv4.conf.all.accept_redirects=0" >> /etc/sysctl.conf'
-    sudo sh -c 'echo "net.ipv6.conf.all.accept_redirects=0" >> /etc/sysctl.conf'
-    sudo sh -c 'echo "net.ipv4.conf.all.send_redirects=0" >> /etc/sysctl.conf'
-
-    # Disables the magic-sysrq key
-    sudo sh -c 'echo "kernel.sysrq=0" >> /etc/sysctl.conf'
-        
-    # Turn off the tcp_timestamps
-    sudo sh -c 'echo "net.ipv4.tcp_timestamps=0" >> /etc/sysctl.conf'
-    
-    # Enable TCP SYN Cookie Protection
-    sudo sh -c 'echo "net.ipv4.tcp_syncookies=1" >> /etc/sysctl.conf'
-    
-    # Enable bad error message Protection
-    sudo sh -c 'echo "net.ipv4.icmp_ignore_bogus_error_responses=1" >> /etc/sysctl.conf'
-    
-    # RELOAD WITH NEW SETTINGS
-    /sbin/sysctl -p
+    sysctl kernel.randomize_va_space=1
+    sysctl kernel.kptr_restrict=1
+    sysctl -w fs.protected_hardlinks=1
+    sysctl -w fs.protected_symlinks=1
+    sysctl -w fs.suid_dumpable=0
+    sysctl net.ipv6.conf.all.disable_ipv6=1
+    sysctl net.ipv6.conf.default.disable_ipv6=1
+    sysctl net.ipv6.conf.lo.disable_ipv6=1
+    sysctl net.ipv6.conf.all.rp_filter=1
+    sysctl net.ipv4.conf.all.rp_filter=1
+    sysctl net.ipv4.conf.all.accept_source_route=0
+    sysctl net.ipv4.icmp_echo_ignore_broadcasts=1
+    sysctl net.ipv4.conf.all.log_martians=1
+    sysctl net.ipv4.conf.default.log_martians=1
+    sysctl -w net.ipv4.conf.all.accept_redirects=0
+    sysctl -w net.ipv6.conf.all.accept_redirects=0
+    sysctl -w net.ipv4.conf.all.send_redirects=0
+    sysctl kernel.sysrq=0
+    sysctl net.ipv4.tcp_timestamps=0
+    sysctl net.ipv4.tcp_syncookies=1
+    sysctl net.ipv4.icmp_ignore_bogus_error_responses=1
+    sysctl net.ipv4.tcp_syn_retries=2
+    sysctl net.ipv4.tcp_synack_retries=2
+    sysctl net.ipv4.tcp_max_syn_backlog=2048
+    sysctl net.ipv4.tcp_rfc1337=1
+    sysctl -p
 }
 
 main() {
