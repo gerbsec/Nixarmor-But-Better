@@ -108,14 +108,14 @@ fix_file_permissions() {
 
 kernel_tuning() {
     sysctl kernel.randomize_va_space=1
-    sysctl -w kernel.kptr_restrict = 1
-    sysctl -w fs.protected_hardlinks = 1
-    sysctl -w fs.protected_symlinks = 1
-    sysctl -w fs.suid_dumpable = 0
+    sysctl kernel.kptr_restrict=1
+    sysctl -w fs.protected_hardlinks=1
+    sysctl -w fs.protected_symlinks=1
+    sysctl -w fs.suid_dumpable=0
     sysctl net.ipv6.conf.all.disable_ipv6=1
     sysctl net.ipv6.conf.default.disable_ipv6=1
     sysctl net.ipv6.conf.lo.disable_ipv6=1
-    sysctl net.ipv6.conf.all.rp_filter = 1
+    sysctl net.ipv6.conf.all.rp_filter=1
     sysctl net.ipv4.conf.all.rp_filter=1
     sysctl net.ipv4.conf.all.accept_source_route=0
     sysctl net.ipv4.icmp_echo_ignore_broadcasts=1
@@ -128,10 +128,10 @@ kernel_tuning() {
     sysctl net.ipv4.tcp_timestamps=0
     sysctl net.ipv4.tcp_syncookies=1
     sysctl net.ipv4.icmp_ignore_bogus_error_responses=1
-    sysctl net.ipv4.tcp_syn_retries = 2
-    sysctl net.ipv4.tcp_synack_retries = 2
-    sysctl net.ipv4.tcp_max_syn_backlog = 2048
-    sysctl net.ipv4.tcp_rfc1337 = 1
+    sysctl net.ipv4.tcp_syn_retries=2
+    sysctl net.ipv4.tcp_synack_retries=2
+    sysctl net.ipv4.tcp_max_syn_backlog=2048
+    sysctl net.ipv4.tcp_rfc1337=1
     sysctl -p
 }
 
