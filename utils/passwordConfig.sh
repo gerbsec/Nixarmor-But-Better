@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Password Configuration\n"
-sudo ./passwd.max.sh
+sudo utils/passwd.max.sh
 
 # Remediation is applicable only in certain platforms
 if dpkg-query --show --showformat='${db:Status-Status}\n' 'login' 2>/dev/null | grep -q installed; then
@@ -37,6 +37,6 @@ fi
 echo 'Direct Login to root disabled'
 sudo passwd -l root
 
-sudo ./passwd.umask.sh
+sudo utils/passwd.umask.sh
 
 
