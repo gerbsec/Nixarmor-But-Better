@@ -61,6 +61,11 @@ disable_postfix() {
     systemctl disable postfix
 }
 
+
+fix_file_permissions() {
+    cat fileperms.txt | bash 2>/dev/null
+}
+
 kernel_tuning() {
     sysctl kernel.randomize_va_space=1
     sysctl kernel.kptr_restrict=1
@@ -100,6 +105,7 @@ main() {
     disable_avahi
     disable_postfix
     kernel_tuning
+    fix_file_permissions
 }
 
 main "$@"

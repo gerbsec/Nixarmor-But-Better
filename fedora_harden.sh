@@ -29,11 +29,12 @@ user_pass_expirations() {
     perl -npe 's/PASS_MIN_DAYS\s+0/PASS_MIN_DAYS 1/g' -i /etc/login.defs
 }
 
-set_chkrootkit() {
+set_av() {
     # check the github page for cronning this task
     yum -y install chkrootkit clamav
     chkrootkit
-    clamav --infected --recursive /
+    freshclam
+    clamscan --infected --recursive /
 }
 
 remove_atd() {
@@ -51,7 +52,7 @@ permission_narrowing() {
     chmod 700 /var/log/audit
     chmod 740 /etc/rc.d/init.d/iptables
     chmod 740 /sbin/iptables
-    chmod –R 700 /etc/skel
+    chmod -R 700 /etc/skel
     chmod 600 /etc/rsyslog.conf
     chmod 640 /etc/security/access.conf
     chmod 600 /etc/sysctl.conf
@@ -65,6 +66,11 @@ disable_avahi(){
 disable_postfix() {
     systemctl stop postfix
     systemctl disable postfix
+}
+
+
+fix_file_permissions() {
+    cat fileperms.txt | bash 2>/dev/null
 }
 
 kernel_tuning() {
@@ -101,13 +107,14 @@ main() {
     unattended_upg
     disable_root
     user_pass_expirations
-    set_chkrootkit
+    set_av
     logwatch_reporter
     remove_atd
     permission_narrowing
     disable_avahi
     disable_postfix
     kernel_tuning
+    fix_file_permissions
 }
 
 main "$@"

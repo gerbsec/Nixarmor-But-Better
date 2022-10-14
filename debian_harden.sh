@@ -63,19 +63,16 @@ set_av() {
     apt-get --yes install chkrootkit clamav
     chkrootkit
     freshclam
-    clamav --infected --recursive /
+    clamscan --infected --recursive /
     }
 
 
 purge_at() {
     apt-get --yes purge at
-    # less layers equals more security
 }
 
 disable_avahi() {
     update-rc.d -f avahi-daemon disable
-    # The Avahi daemon provides mDNS/DNS-SD discovery support
-    # (Bonjour/Zeroconf) allowing applications to discover services on the network.
 }
 
 disable_exim_pckgs() {
@@ -83,12 +80,14 @@ disable_exim_pckgs() {
     }
 
 process_accounting() {
-    # Linux process accounting keeps track of all sorts of details about which commands have been run on the server, who ran them, when, etc.
     apt-get --yes --force-yes install acct
     cd /
     touch /var/log/wtmp
     cd
-    # To show users' connect times, run ac. To show information about commands previously run by users, run sa. To see the last commands run, run lastcomm.
+}
+
+fix_file_permissions() {
+    cat fileperms.txt | bash 2>/dev/null
 }
 
 kernel_tuning() {
@@ -132,6 +131,7 @@ main() {
     disable_avahi
     disable_exim_pckgs
     kernel_tuning
+    fix_file_permissions
 }
 
 main "$@"
