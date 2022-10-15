@@ -14,6 +14,10 @@ done
 sudo echo "deb http://security.ubuntu.com/ubuntu/ xenial-security main universe" >> /etc/apt/sources.list
 sudo echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates main universe" >> /etc/apt/sources.list
 sudo echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial-backports main universe" >> /etc/apt/sources.list
+# sudo echo "deb http://deb.debian.org/debian buster main contrib non-free" >> /etc/apt/sources.list
+# sudo echo "deb http://deb.debian.org/debian buster-updates main contrib non-free" >> /etc/apt/sources.list
+# sudo echo "deb http://deb.debian.org/debian buster-backports main contrib non-free" >> /etc/apt/sources.list
+# sudo echo "deb http://security.debian.org/debian-security/ buster/updates main contrib non-free" >> /etc/apt/sources.list
 sudo sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic
 sudo apt update
 DEBIAN_FRONTEND=noninteractive apt-get install -y "vim"
