@@ -180,6 +180,6 @@ sudo utils/passwordConfig.sh
 sudo utils/sessionConfig.sh
 sudo utils/auditConfig.sh
 sudo utils/pamConfig.sh
-sudo utils/permissionsConfig.sh
 uname -a | grep -i ubuntu && sudo utils/ubuntu_harden.sh
 uname -a | grep -i debian && sudo utils/debian_harden.sh
+sudo utils/permissionsConfig.sh
