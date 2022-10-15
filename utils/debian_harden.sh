@@ -33,21 +33,25 @@ disable_compilers() {
     # 755 to bring them back online
 }
 
-# firewall() {
-#     apt-get --yes --force-yes install ufw
-#     ufw allow ssh
-#     ufw allow http
-#     ufw deny 23
-#     ufw default deny
-#     ufw enable
-#     }
-
-# harden_ssh_brute() {
-#     # Many attackers will try to use your SSH server to brute-force passwords.
-#     # This will only allow 6 connections every 30 seconds from the same IP address.
-#     ufw limit OpenSSH
-# }
-
+function enable_ufw()
+{
+	header "\nFirewall Lockdown"
+	command -v ufw >/dev/null
+	if [ $? -eq 0 ];then
+		success "UFW found enableing firewall."
+		ufw enable > /dev/null
+	else
+		error "UFW not installed."
+		read -p "[?] Would you like to install ufw? [y/n] " -n 1 -r
+		echo
+		if [[ $REPLY =~ ^[Yy]$ ]]
+		then
+			apt-get install -y ufw
+			ufw enable > /dev/null
+			success "UFW is now enabled."
+		fi
+	fi
+}
 
 set_av() {
     apt-get --yes install chkrootkit clamav

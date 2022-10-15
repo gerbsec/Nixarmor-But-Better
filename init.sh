@@ -1,9 +1,10 @@
 #!/bin/bash
 grep '^sudo:.*$' /etc/group | cut -d: -f4 >> sudoUsers.txt
 systemctl list-units --all --type=service --no-pager | grep running >> current.services
-diff current.services default.services >> check.services && rm current.services
+diff current.services default.services >> check.services 
 sudo apt list --installed >> current.apps
-diff current.apps default.apps >> check.apps && rm current.apps
+diff current.apps default.apps >> check.apps
+rm current.services && rm current.apps
 for str in "nmap" "zenmap" "apache2" "nginx" "lighttpd" "wireshark" "tcpdump" "netcat-traditional" "nikto" "ophcrack" "john" "ripper" "rainbow" "invicti" "fortify" "webinspect" "cain" "abel" "nessus" "kismet" "netstumbler" "acunetix" "netsparker" "intruder" "metsploit" "aircrack-ng" "wireshark" "openvas" "sqlmap" "ettercap" "maltego" "burp" "angry" "solarwinds" "traceroute" "tracert" "liveaction" "qualysguard" "hashcat" "l0phtcrack" "ikecrack" "sboxr" "medusa" "crack"; do
 	find / -name $str >> bad.apps
 done
@@ -180,6 +181,4 @@ sudo utils/auditConfig.sh
 sudo utils/pamConfig.sh
 sudo utils/permissionsConfig.sh
 uname -a | grep -i ubuntu && sudo utils/ubuntu_harden.sh
-uname -a | grep -i debian && sudo utils/ubuntu_harden.sh
-uname -a | grep -i centos && sudo utils/ubuntu_harden.sh
-uname -a | grep -i fedora && sudo utils/ubuntu_harden.sh
+uname -a | grep -i debian && sudo utils/debian_harden.sh
