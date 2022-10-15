@@ -56,10 +56,10 @@ disable_compilers() {
 
 function enable_ufw()
 {
-	header "\nFirewall Lockdown"
+	echo -e "\nFirewall Lockdown"
 	command -v ufw >/dev/null
 	if [ $? -eq 0 ];then
-		success "UFW found enableing firewall."
+		echo "UFW found enableing firewall."
 		ufw enable > /dev/null
 	else
 		error "UFW not installed."
@@ -69,7 +69,7 @@ function enable_ufw()
 		then
 			apt-get install -y ufw
 			ufw enable > /dev/null
-			success "UFW is now enabled."
+			echo "UFW is now enabled."
 		fi
 	fi
 }

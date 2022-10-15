@@ -35,10 +35,10 @@ disable_compilers() {
 
 function enable_ufw()
 {
-	header "\nFirewall Lockdown"
+	echo -e "\nFirewall Lockdown"
 	command -v ufw >/dev/null
 	if [ $? -eq 0 ];then
-		success "UFW found enableing firewall."
+		echo "UFW found enableing firewall."
 		ufw enable > /dev/null
 	else
 		error "UFW not installed."
@@ -48,7 +48,7 @@ function enable_ufw()
 		then
 			apt-get install -y ufw
 			ufw enable > /dev/null
-			success "UFW is now enabled."
+			echo "UFW is now enabled."
 		fi
 	fi
 }
@@ -140,9 +140,21 @@ kernel_tuning() {
 
 main() {
     sys_upgrades
-    unattended_upg
-    disable_root
-    purge_nfs
+    unattended_upg# firewall() {
+#     apt-get --yes --force-yes install ufw
+#     ufw allow ssh
+#     ufw allow http
+#     ufw deny 23
+#     ufw default deny
+#     ufw enable
+#     }
+
+# harden_ssh_brute() {
+#     # Many attackers will try to use your SSH server to brute-force passwords.
+#     # This will only allow 6 connections every 30 seconds from the same IP address.
+#     ufw limit OpenSSH
+# }
+
     set_av
     process_accounting
     harden_php
@@ -151,6 +163,7 @@ main() {
     disable_avahi
     disable_exim_pckgs
     kernel_tuning
+    enable_ufw
     fix_file_permissions
     disable_compilers
     user_pass_expirations
