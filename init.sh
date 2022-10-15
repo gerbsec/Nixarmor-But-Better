@@ -17,6 +17,7 @@ sudo echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial-backports main univer
 sudo sed -i 's/APT::Periodic::Update-Package-Lists "0";/APT::Periodic::Update-Package-Lists "1";/g' /etc/apt/apt.conf.d/10periodic
 sudo apt update
 DEBIAN_FRONTEND=noninteractive apt-get install -y "vim"
+DEBIAN_FRONTEND=noninteractive apt-get install -y "tmux"
 DEBIAN_FRONTEND=noninteractive apt-get install -y "cron"
 DEBIAN_FRONTEND=noninteractive apt-get install -y "aide"
 DEBIAN_FRONTEND=noninteractive apt-get install -y "vlock"

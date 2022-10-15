@@ -140,21 +140,9 @@ kernel_tuning() {
 
 main() {
     sys_upgrades
-    unattended_upg# firewall() {
-#     apt-get --yes --force-yes install ufw
-#     ufw allow ssh
-#     ufw allow http
-#     ufw deny 23
-#     ufw default deny
-#     ufw enable
-#     }
-
-# harden_ssh_brute() {
-#     # Many attackers will try to use your SSH server to brute-force passwords.
-#     # This will only allow 6 connections every 30 seconds from the same IP address.
-#     ufw limit OpenSSH
-# }
-
+    unattended_upg
+    purge_nfs
+    disable_root
     set_av
     process_accounting
     harden_php
