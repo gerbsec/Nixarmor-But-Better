@@ -172,7 +172,7 @@ else
 fi
 
 
-sudo utils/aideAConfig.sh
+sudo utils/aideConfig.sh
 sudo utils/gnomeConfig.sh
 sudo utils/sudoConfig.sh
 sudo utils/aptConfig.sh
