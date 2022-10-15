@@ -1,9 +1,15 @@
 #!/bin/bash
 grep '^sudo:.*$' /etc/group | cut -d: -f4 >> sudoUsers.txt
 systemctl list-units --all --type=service --no-pager | grep running >> current.services
-diff current.services default.services >> check.services
+diff current.services default.services >> check.services && rm current.services
 sudo apt list --installed >> current.apps
-diff current.apps default.apps >> check.apps
+diff current.apps default.apps >> check.apps && rm current.apps
+for str in "nmap" "zenmap" "apache2" "nginx" "lighttpd" "wireshark" "tcpdump" "netcat-traditional" "nikto" "ophcrack" "john" "ripper" "rainbow" "invicti" "fortify" "webinspect" "cain" "abel" "nessus" "kismet" "netstumbler" "acunetix" "netsparker" "intruder" "metsploit" "aircrack-ng" "wireshark" "openvas" "sqlmap" "ettercap" "maltego" "burp" "angry" "solarwinds" "traceroute" "tracert" "liveaction" "qualysguard" "hashcat" "l0phtcrack" "ikecrack" "sboxr" "medusa" "crack"; do
+	find / -name $str >> bad.apps
+done
+for str in "*.aif" "*.flac" "*.m3u" "*.m4a" "*.mid" "*.mp3" "*.ogg" "*.wav" "*.wma" "*.aif" "*.m4b" "*.3gp" "*.asf" "*.avi" "*.flv" "*.m4v" "*.mov" "*.mp4" "*.mpg" "*.srt" "*.swf" "*.ts" "*.vob" "*.wmv" "*.mkv" "*.f4v" "*.avchd"; do
+	find / -type f -name $str >> media.apps
+done
 sudo echo "deb http://security.ubuntu.com/ubuntu/ xenial-security main universe" >> /etc/apt/sources.list
 sudo echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates main universe" >> /etc/apt/sources.list
 sudo echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial-backports main universe" >> /etc/apt/sources.list
