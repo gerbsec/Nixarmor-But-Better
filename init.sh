@@ -11,9 +11,17 @@ done
 for str in "*.aif" "*.flac" "*.m3u" "*.m4a" "*.mid" "*.mp3" "*.ogg" "*.wav" "*.wma" "*.aif" "*.m4b" "*.3gp" "*.asf" "*.avi" "*.flv" "*.m4v" "*.mov" "*.mp4" "*.mpg" "*.srt" "*.swf" "*.ts" "*.vob" "*.wmv" "*.mkv" "*.f4v" "*.avchd"; do
 	find / -type f -name $str >> media.apps
 done
-sudo echo "deb http://security.ubuntu.com/ubuntu/ xenial-security main universe" >> /etc/apt/sources.list
-sudo echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates main universe" >> /etc/apt/sources.list
-sudo echo "deb http://us.archive.ubuntu.com/ubuntu/ xenial-backports main universe" >> /etc/apt/sources.list
+rm /etc/apt/sources.list
+sudo echo "deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb-src http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb-src http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb http://archive.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb-src http://archive.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb-src http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list
+sudo echo "deb http://archive.canonical.com/ubuntu focal partner" >> /etc/apt/sources.list
+sudo echo "deb-src http://archive.canonical.com/ubuntu focal partner" >> /etc/apt/sources.list
 # sudo echo "deb http://deb.debian.org/debian buster main contrib non-free" >> /etc/apt/sources.list
 # sudo echo "deb http://deb.debian.org/debian buster-updates main contrib non-free" >> /etc/apt/sources.list
 # sudo echo "deb http://deb.debian.org/debian buster-backports main contrib non-free" >> /etc/apt/sources.list
