@@ -4,7 +4,7 @@
 
 *This program comes with ABSOLUTELY NO WARRANTY!*
 
-*Made for competitions NOT production environments!"
+*Made for competitions NOT production environments!*
 
 *Be Advised, do NOT use in production environments!*
 
