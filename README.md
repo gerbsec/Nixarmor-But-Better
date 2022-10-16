@@ -4,6 +4,8 @@
 
 *This program comes with ABSOLUTELY NO WARRANTY!*
 
+*Made for competitions NOT production environments!"
+
 *Be Advised, do NOT use in production environments!*
 
 	Wikipedia's description for Hardening:
