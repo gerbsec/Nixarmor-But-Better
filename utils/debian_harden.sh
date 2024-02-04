@@ -81,7 +81,7 @@ process_accounting() {
 }
 
 fix_file_permissions() {
-    cat /root/nixarmor-but-better/fileperms.txt | bash 2>/dev/null
+    cat ./fileperms.txt | bash 2>/dev/null
 }
 
 
@@ -141,20 +141,15 @@ kernel_tuning() {
 main() {
     sys_upgrades
     unattended_upg
-    purge_nfs
-    disable_root
     set_av
     process_accounting
     harden_php
     harden_apache
-    purge_at
     disable_avahi
     disable_exim_pckgs
     kernel_tuning
-    enable_ufw
     fix_file_permissions
     disable_compilers
-    user_pass_expirations
 }
 
 main "$@"

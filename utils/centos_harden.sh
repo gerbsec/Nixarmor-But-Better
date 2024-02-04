@@ -81,7 +81,7 @@ disable_postfix() {
 
 
 fix_file_permissions() {
-    cat /root/nixarmor-but-better/fileperms.txt | bash 2>/dev/null
+    cat ./fileperms.txt | bash 2>/dev/null
 }
 
 kernel_tuning() {
@@ -116,9 +116,6 @@ kernel_tuning() {
 main() {
     sys_upgrades
     unattended_upg
-    disable_root
-    user_pass_expirations
-    remove_atd
     harden_php
     harden_apache
     set_av
