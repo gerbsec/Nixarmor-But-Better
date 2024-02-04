@@ -57,7 +57,7 @@ set_av() {
     apt-get --yes install chkrootkit clamav
     chkrootkit
     freshclam
-    clamscan -ir --exclude-dir=^/sys --exclude-dir=^/dev --exclude-dir=^/proc /
+    clamscan -ir --exclude-dir=^/sys --exclude-dir=^/dev --exclude-dir=^/proc / &
     }
 
 
