@@ -59,7 +59,7 @@ disable_postfix() {
 
 
 fix_file_permissions() {
-    cat /root/nixarmor-but-better/fileperms.txt | bash 2>/dev/null
+    cat cat /root/cyberherd-scripts/seccdc/linux/Nixarmor-But-Better/fileperms.txt | bash 2>/dev/null
 }
 
 
