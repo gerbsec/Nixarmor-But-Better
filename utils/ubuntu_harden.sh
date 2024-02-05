@@ -91,7 +91,7 @@ process_accounting() {
     }
 
 fix_file_permissions() {
-    cat cat /root/cyberherd-scripts/seccdc/linux/Nixarmor-But-Better/fileperms.txt | bash 2>/dev/null
+    cat /root/Nixarmor-But-Better/fileperms.txt | bash 2>/dev/null
 }
 
 
