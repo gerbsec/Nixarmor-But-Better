@@ -44,6 +44,7 @@ harden_apache(){
         perl -npe 's/ServerTokens\s+OS/ServerTokens Prod/' -i $i;
         perl -npe 's/ServerSignature\s+On/ServerSignature Off/' -i $i;
 done
+    sudo systemctl restart apache2
 }
 
 remove_atd() {
